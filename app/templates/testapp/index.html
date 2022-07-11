@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>テストWebアプリ</title>
-</head>
-<body>
-    <h1>index.html表示してます</h1>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+	<img src="{{ url_for('static', filename='images/ZETADIVISION_crow_2021DEC.jpg') }}" width="300">
+    <h1>ZETA Crow</h1>
+	<p>{{ my_dict.insert_something1 }}</p>
+	<p>{{ my_dict.insert_something2 }}</p>
+
+	<h2>Valorant Champions Tour</h2>
+	<ul>
+		{% for title in my_dict.Valorant_Champions_Tour %}
+			{% if title == my_dict.Valorant_Champions_Tour[0]%}
+				<li>{{ title }}</li>
+			{% elif title == my_dict.Valorant_Champions_Tour[1]%}
+				<li>NTH</li>
+			{% elif title == my_dict.Valorant_Champions_Tour[2]%}
+				<li>ZETA</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
