@@ -1,14 +1,45 @@
-{% extends "layout.html" %}
-
+{% extends 'layout.html' %}
 {% block content %}
-
-<h1>ログイン</h1>
-<form method="POST">
-    <label for="">ユーザ名</label>
-    <input type="text" name="name">
-    <label for="">パスワード</label>
-    <input type="password" name="password">
-    <input type="submit" value="ログイン">
-</form>
-
+<style>
+    .failed{
+        color: red;
+    }
+</style>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+	<div class="card px-1 py-4" style="width: 400px;">
+		<div class="card-body">
+			<h6 class="card-title mb-3">ログイン画面</h6>
+			<form method="POST">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="name">ユーザー名</label>
+							<input name="name" class="form-control" type="text" placeholder="ユーザー名"></input>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="password">パスワード</label>
+							<input name="password" class="form-control" type="password" placeholder="パスワード"></input>
+						</div>
+					</div>
+				</div>
+                <div class="row mt-3">
+                    <a>※新規登録を行っていない方は</a>
+                    <a class="text-decoration-none" href="{{ url_for('signup')}}">
+                        新規登録
+                    </a>
+                    <a>を行ってください。</a>
+                </div>
+				<div class="row mt-3">
+					<div class="col text-center">
+						<button type="submit" class="btn">ログイン</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock %}

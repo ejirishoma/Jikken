@@ -7,15 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.employee import User_info
 
 @app.route('/')
-@login_required
 def index():
     if current_user.is_authenticated:
-        data = {
-            'insert_something1':'#ZETAWIN',
-            'insert_something2':'#NTHWIN',
-            'Valorant_Champions_Tour':['Challengers', 'Masters', 'Champions']
-        }
-        return render_template('testapp/index.html', my_dict=data)
+        user_id = current_user.get_id()
+        user = User_info.query.get(user_id)
+        return render_template('testapp/student_login.html', user=user)
     else:
         return redirect('/login')  
 
@@ -56,3 +52,13 @@ def login():
 def logout():
     logout_user()
     return redirect('/login')
+
+@app.route('/Quizroom', methods=['GET', 'POST'])
+@login_required
+def Quizroom():
+    roomname = request.form.get('room')
+    user_id = current_user.get_id()
+    user = User_info.query.get(user_id)
+    return render_template('testapp/QuizRoom.html', roomname=roomname, user=user)
+
+    

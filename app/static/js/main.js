@@ -102,7 +102,7 @@ class Label {
 var str=document.getElementById( 'str' ).title;
 let game=new Game(516,100);
 let label=new Label(str);
-label.interval=20;
+label.interval=10;
 label.maxLength=32;
 
 game.add(label,5,5);
