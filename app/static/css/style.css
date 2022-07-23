@@ -1,0 +1,131 @@
+p{
+    color:black;
+}
+
+.box_css{
+    width:auto;
+    margin:1em;
+    border:solid 3px #000000;
+    background-color: #ccc;
+}
+
+.base{
+    display: flex;
+    flex-direction: row;
+    width:100vw;
+    height: 100vh;
+}
+
+.class1{
+    width:30%
+}
+
+.class2{
+    display:flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.quiz{
+    width:auto;
+    margin:0.5em;
+    border:solid 3px #000000;
+    background-color: #ccc;
+}
+
+.choicebox{
+    width:auto;
+    padding:10px;
+    display:flex;
+    align-items:stretch;
+}
+
+.choice{
+    padding:10px;
+    color:#fff;
+    margin:10px;
+    border-radius:5px;
+    width:15%;
+}
+
+.content{
+    width:100px;
+    margin:0;
+    border:solid 3px red;
+    background-color: white;
+}
+
+.contentR{
+    width:105px;
+    margin:0;
+    border:solid 3px red;
+    background-color: white;
+}
+
+.contentB{
+    width:105px;
+    margin:0;
+    border:solid 3px blue;
+    background-color: white;
+}
+.contentY{
+    width:105px;
+    margin:0;
+    border:solid 3px yellow;
+    background-color: white;
+}
+.contentG{
+    width:105px;
+    margin:0;
+    border:solid 3px green;
+    background-color: white;
+}
+
+.btn--orange,
+a.btn--black {
+  color: black;
+  background-color: white;
+}
+
+a.btn--radius {
+    border-radius: 100vh;
+}
+
+.btn--red{
+    color:red;
+    font-size: 1.6px;
+    font-weight:auto;
+    line-height:auto;
+    padding: 10px;
+    border:solid 3px red;
+    background-color: white;
+}
+
+.btn,
+a.btn,
+button.btn {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: black;
+  border:solid 3px black;
+}
+
+img.quiz{
+    width:25%;
+    height:25%;
+}

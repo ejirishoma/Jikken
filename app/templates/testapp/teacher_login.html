@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja" class>
+    <head>
+        <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css" media="all">
+        <title>teacher_login</title>
+    </head>
+
+    <body><center>
+        <div class="box_css">
+            <p>Quiz Room(Teacher)</p>
+        </div>
+        <form action="/teacher_login" method="POST">
+            <label for="teachername">Name:</label>
+            <input type="text" id="teachername" name="teachername" required minlength="4" maxlength="8" size="10">
+            <br>
+            <label for="pass">Password:</label>
+            <input type="text" id="pass" name="pass" required minlength="4" maxlength="8" size="10">
+            <br>
+            <br>
+            <a href="" class="btn btn--black">ログイン</a>
+        </form>
+        
+
+        </center>
+    </body>
