@@ -12,11 +12,20 @@
         <div class="box_css">
             <p>Quiz Room(Teacher: {{ user.name }} )</p>
         </div>
+        <form action="/Makeroom" method="POST">
+            <label for="room">Room:</label>
+            <input type="text" name="room" required minlength="1" maxlength="100" size="10">
+            <br>
+            <label for="quiz">QuizID:</label>
+            <input type="text" name="quiz" required minlength="1" maxlength="100" size="10">
+            <br>
+            
+            <bottun href="{{ url_for('teacher') }}" class="btn btn--black">部屋作成</a>
+        </form>
 
         
         
-        <a href="{{ url_for('makeroom') }}" class="btn btn--black">部屋作成</a>
-        <a href="{{ url_for('makequiz') }}" class="btn btn--black">問題作成</a>
+        
 
         </center>
     </body>

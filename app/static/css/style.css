@@ -2,6 +2,12 @@ p{
     color:black;
 }
 
+body{
+    font-family:"Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3",メイリオ, Meiryo,"ＭＳ　Ｐゴシック","Helvetica Nueue",Helvetica,Arial,sans-serif;
+    background-color:#e6e6e6;
+    font-size:1em;
+}
+
 .box_css{
     width:auto;
     margin:1em;
@@ -104,25 +110,26 @@ a.btn--radius {
 .btn,
 a.btn,
 button.btn {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1rem;
+  /* font-weight: 700; */
   line-height: 1.5;
   position: relative;
   display: inline-block;
-  padding: 1rem 4rem;
-  cursor: pointer;
-  -webkit-user-select: none;
+  padding: 0.5rem 1rem;
+  /* cursor: pointer; */
+  /* -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  transition: all 0.3s; */
   text-align: center;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   text-decoration: none;
   letter-spacing: 0.1em;
   color: black;
-  border:solid 3px black;
+  border:solid 1px black;
+  font-family:"Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3",メイリオ, Meiryo,"ＭＳ　Ｐゴシック","Helvetica Nueue",Helvetica,Arial,sans-serif;
 }
 
 img.quiz{
