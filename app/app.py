@@ -8,6 +8,7 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 from models import employee
+# from models import quiztable
 
 login_manager = LoginManager()
 login_manager.init_app(app)

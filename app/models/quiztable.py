@@ -11,4 +11,4 @@ class quiz_info(db.Model):
     Choice3 = db.Column(db.String(10))  # 選択肢3
     Choice4 = db.Column(db.String(10))  # 選択肢4
     answer = db.Column(db.Integer) #正解の選択肢
-    link = db.Column(db.string(30))#画像のパス名
+    link = db.Column(db.String(30))#画像のパス名

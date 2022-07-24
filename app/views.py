@@ -1,17 +1,23 @@
 from flask import render_template, request, redirect, url_for
 from app import db
 from app import app
-from random import randint
+from random import randint, random
 from flask_login import UserMixin, LoginManager, login_user , logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.employee import User_info
+from models.employee import User_info, quiz_info
+# from models.quiztable import quiz_info
+# import random
 
 @app.route('/')
 def index():
     if current_user.is_authenticated:
         user_id = current_user.get_id()
-        user = User_info.query.get(user_id)
-        return render_template('testapp/student_login.html', user=user)
+        user_data = User_info.query.get(user_id)
+
+        if (user_data.zokusei == 0):
+            return redirect('/student_login')
+        else:
+            return redirect('/teacher_login')
     else:
         return redirect('/login')
 
@@ -57,14 +63,20 @@ def logout():
 @app.route('/Quizroom', methods=['GET', 'POST'])
 @login_required
 def Quizroom():
-    roomname = request.form.get('room')
+    # roomname = request.form.get('room')
     user_id = current_user.get_id()
     user = User_info.query.get(user_id)
-    return render_template('testapp/QuizRoom.html', roomname=roomname, user=user)
+
+    # if request.method == "POST":
+    id_count = quiz_info.query.get().count()
+    random_id = random.randrange(0, id_count)
+    quiz_data = quiz_info.query.get(random_id)
+
+    return render_template('testapp/QuizRoom.html', quiz_data=quiz_data, user=user)
 
 @app.route('/makequiz', methods=['GET', 'POST'])
 @login_required
-def Makequiz():
+def makequiz():
     user_id = current_user.get_id()
     user_data = User_info.query.get(user_id)
     if (user_data.zokusei == 1):
@@ -78,7 +90,6 @@ def Makequiz():
             answer = request.form.get('answer')
 
             if not allowed_images(image.filename):
-                flash('Invalid image extension!', 'danger')
                 return redirect(request.url)
             else:
                 ext = os.path.splitext(file_name)[1]  # get the file extension
@@ -101,3 +112,19 @@ def Makequiz():
            return render_template('testapp/makequiz.html')
     else:
         return redirect('/')
+
+@app.route('/student_login', methods=['GET', 'POST'])
+@login_required
+def student_login():
+    user_id = current_user.get_id()
+    user_data = User_info.query.get(user_id)
+
+    return render_template('testapp/student_login.html', user=user_data)
+
+@app.route('/teacher_login')
+@login_required
+def teacher_login():
+    user_id = current_user.get_id()
+    user_data = User_info.query.get(user_id)
+
+    return render_template('testapp/teacher_login.html', user=user_data)

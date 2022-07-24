@@ -14,7 +14,7 @@
             <p>Make Quiz</p>
         </div>
         </center>
-        <form action="/Makeroom" method="POST">
+        <form action="/makequiz" method="POST">
         <div class="base">
             <div class="class1">
                 <!-- <iframe src="left.html" width="100%" height="100%"></iframe> -->
@@ -31,43 +31,42 @@
                     <p>第N問</p>
                     <input type="file" name="link"><br>
                     <label for="question">問題文:</label><br>
-                    <textarea id="question" name="sentense" rows="5" cols="33">問題文を入力してね٩(ˊᗜˋ*)و</textarea>
+                    <textarea id="question" name="sentence" rows="5" cols="33">問題文を入力してね٩(ˊᗜˋ*)و</textarea>
                     <div class="choicebox">
                         <div class="choice">
                             <div class="contentR">
-                                <input type="text" name="Choice1" required minlength="1" maxlength="8" size="10">
+                                <input type="text" name="Choice1" required minlength="1" maxlength="8" size="8">
                             </div>
                         </div>
                         <div class="choice">
                             <div class="contentB">
-                                <input type="text" name="Choice2" required minlength="1" maxlength="8" size="10">
+                                <input type="text" name="Choice2" required minlength="1" maxlength="8" size="8">
                             </div>
                         </div>
                         <div class="choice">
                             <div class="contentY">
-                                <input type="text" name="Choice3" required minlength="1" maxlength="8" size="10">
+                                <input type="text" name="Choice3" required minlength="1" maxlength="8" size="8">
                             </div>
                         </div>
                         <div class="choice">
                             <div class="contentG">
-                                <input type="text" name="Choice4" required minlength="1" maxlength="8" size="10">
+                                <input type="text" name="Choice4" required minlength="1" maxlength="8" size="8">
                             </div>
                         </div>
                     </div>
+                    <label for="password">解答</label>
+                    <br>
+                    <input type="radio" name="answer" value="1" checked>赤
+                    <input type="radio" name="answer" value="2">青
+                    <input type="radio" name="answer" value="3">黄
+                    <input type="radio" name="answer" value="4">緑
+            
+                    <button type=submit onclick="location.href='/makequiz'" class="btn btn--black">次の問題へ</button>
+                    <button type=submit onclick="location.href='/teacher_login'" class="btn btn--black">終了</button>
+                </div>
                 </div>
             </div>
-        </div>
         </form>
-
-        <label for="password">解答</label>
-		<br>
-		<input type="radio" name="answer" value="1">赤
-		<input type="radio" name="answer" value="2">青
-        <input type="radio" name="answer" value="3">黄
-		<input type="radio" name="answer" value="4">緑
-
-        <a href="" class="btn btn--black">次の問題へ</a>
-        <a href="" class="btn btn--black">終了</a>
     </body>
 
     </html>

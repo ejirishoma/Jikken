@@ -1,27 +1,47 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja" class>
-    <head>
-        <meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css" media="all">
-        <title>teacher_login</title>
-    </head>
+    <title>teacher</title>
+</head> -->
+{% extends "layout.html" %}
 
-    <body><center>
+{% block content %}
+
+<body>
+    <center>
         <div class="box_css">
-            <p>Quiz Room(Teacher)</p>
+            <p>Quiz Room(Teacher:{{ user.name }})</p>
         </div>
-        <form action="/teacher_login" method="POST">
-            <label for="teachername">Name:</label>
-            <input type="text" id="teachername" name="teachername" required minlength="4" maxlength="8" size="10">
-            <br>
-            <label for="pass">Password:</label>
-            <input type="text" id="pass" name="pass" required minlength="4" maxlength="8" size="10">
-            <br>
-            <br>
-            <a href="{{ url_for('teacher') }}" class="btn btn--black">ログイン</a>
-        </form>
-        
+        <p>
+            ユーザー名:{{ user.name }}
+        </p>
 
-        </center>
-    </body>
-    
+        <form action="/Quizroom" method="POST">
+            
+            <label for="room">Room:</label>
+            <input type="text" id="room" name="room" required minlength="1" maxlength="100" size="10">
+            <br>
+            
+            <div class="choicebox">
+                
+                <div class="choicebox">
+                    <button type="submit" class="btn btn--black">入室</button>
+                </div>
+                <div class="choicebox">
+                    <button type=submit onclick="location.href='/makequiz'" class="btn btn--black">問題作成</button>
+                </div>
+                
+            <br>
+            <div>
+            
+            
+        </form> 
+        
+        
+            
+    </center>
+</body>
+{% endblock %}
