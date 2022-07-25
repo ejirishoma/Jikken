@@ -1,12 +1,18 @@
 from flask import render_template, request, redirect, url_for
 from app import db
 from app import app
-from random import randint, random
+from random import randint, randrange
 from flask_login import UserMixin, LoginManager, login_user , logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.employee import User_info, quiz_info
-# from models.quiztable import quiz_info
-# import random
+from models.employee import User_info
+from models.quiztable import quiz_info
+import random
+import os
+import string
+
+def get_random_string(length):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for i in range(length))
 
 @app.route('/')
 def index():
@@ -68,8 +74,8 @@ def Quizroom():
     user = User_info.query.get(user_id)
 
     # if request.method == "POST":
-    id_count = quiz_info.query.get().count()
-    random_id = random.randrange(0, id_count)
+    id_count = db.session.query(quiz_info).count()
+    random_id = random.randrange(0, id_count, 1)
     quiz_data = quiz_info.query.get(random_id)
 
     return render_template('testapp/QuizRoom.html', quiz_data=quiz_data, user=user)
@@ -88,23 +94,23 @@ def makequiz():
             choice3 = request.form.get('Choice3')
             choice4 = request.form.get('Choice4')
             answer = request.form.get('answer')
+            file_name = request.form.get('link')
+            # if not allowed_images(image.filename):
+            #     return redirect(request.url)
+            # else:
+            ext = os.path.splitext(file_name)[1]  # get the file extension
+            new_filename = get_random_string(20)  # create a random string
 
-            if not allowed_images(image.filename):
-                return redirect(request.url)
-            else:
-                ext = os.path.splitext(file_name)[1]  # get the file extension
-                new_filename = get_random_string(20)  # create a random string
-
-                image.save(os.path.join(app.config['IMAGE_UPLOADS'], new_filename+ext))  # save with the new path
+            image.save(os.path.join(app.config['IMAGE_UPLOADS'], new_filename+ext))  # save with the new path
 
             quiz = quiz_info(questionid = questionid, sentence=sentence, Choice1=choice1, Choice2=choice2, Choice3=choice3, Choice4=choice4, link=os.path.join(app.config['IMAGE_UPLOADS'], new_filename+ext))
             
-            if(user_data.questionid == questionid):#問題IDが被ったら上書きする
-                db.session.merge(quiz)
-                db.session.commit()
-            else:
-                db.session.add(quiz)
-                db.session.commit()
+            # if(user_data.questionid == questionid):#問題IDが被ったら上書きする
+            #     db.session.merge(quiz)
+            #     db.session.commit()
+            # else:
+            db.session.add(quiz)
+            db.session.commit()
 
             return redirect('/')
         
