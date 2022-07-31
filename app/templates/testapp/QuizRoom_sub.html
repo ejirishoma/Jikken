@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<body>
+
+    <center>
+        <div class="box_css">
+            <p>QuizRoom</p>
+        </div>
+    </center>
+    <form action=Quizroom method="POST" enctype = multipart/form-data>
+    <div class="base">
+        <div class="class1">
+            <center>
+                <script>
+                    var randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+                </script>
+                <userfont color=randomColor>
+                    クイズID：{{ quiz_data.id }}
+                </userfont>
+                <userfont color=randomColor>
+                    プレイヤー名：{{ user.name }}
+                </userfont>
+            </center>
+        </div>
+        <div class="class2">
+            <!-- ここに問題文入れればいいんだけどどうすれば。。。 -->
+            <div id="str" title="{{ quiz_data.sentence }}"></div>
+            <div class="quiz">
+                <p>問題{{ quiz_data.id }}</p>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+                <img src="uploads/{{ quiz_data.link }}"  width="450" height="300"></img>
+                <br>
+                <label for="question">問題文:</label>
+                <br>
+                <canvas id="canvas"></canvas>
+                <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+                <br>
+                <div class="choicebox">
+                    <!-- <div class="choice">
+                        <button name=choice, class="contentR", value=1>{{ quiz_data.Choice1 }}</button>
+                    </div>
+                    <div class="choice">
+                        <button name=choice, class="contentB", value=2>{{ quiz_data.Choice2 }}</button>
+                    </div>
+                    <div class="choice">
+                        <button name=choice, class="contentY", value=3>{{ quiz_data.Choice3 }}</button>
+                    </div>
+                    <div class="choice">
+                        <button name=choice, class="contentG", value=4>{{ quiz_data.Choice4 }}</button>
+                    </div> -->
+                    <input type="radio" name="answer" value="1" checked>{{ quiz_data.Choice1 }}
+                    <input type="radio" name="answer" value="2">{{ quiz_data.Choice2 }}
+                    <input type="radio" name="answer" value="3">{{ quiz_data.Choice3 }}
+                    <input type="radio" name="answer" value="4">{{ quiz_data.Choice4 }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type=submit class="btn btn--black">次の問題へ</button>
+    <a href="{{ url_for('index') }}" class="btn btn--black">終了</a>
+</form>
+</body>
+<script>
+    var randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+</script>
+{% endblock %}

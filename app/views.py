@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from app import db
 from app import app
 from random import randint, randrange
@@ -6,9 +6,18 @@ from flask_login import UserMixin, LoginManager, login_user , logout_user, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.employee import User_info
 from models.quiztable import quiz_info
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+from sqlalchemy.sql import func
 import random
 import os
 import string
+
+def allwed_file(filename):
+    # .があるかどうかのチェックと、拡張子の確認
+    # OKなら１、だめなら0
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_random_string(length):
     letters = string.ascii_letters
@@ -73,12 +82,19 @@ def Quizroom():
     user_id = current_user.get_id()
     user = User_info.query.get(user_id)
 
-    # if request.method == "POST":
-    id_count = db.session.query(quiz_info).count()
-    random_id = random.randrange(0, id_count, 1)
+    id_count = db.session.query(func.count(quiz_info.questionid)).scalar()
+    random_id = random.randint(1,id_count)
     quiz_data = quiz_info.query.get(random_id)
 
-    return render_template('testapp/QuizRoom.html', quiz_data=quiz_data, user=user)
+    form_answer = request.form.get('answer')
+    db_answer = quiz_info.query.get(random_id).answer
+    if request.method == "POST":
+        if(int(form_answer) == db_answer):
+            flash('正解です')
+        else:
+            flash('不正解です')
+    
+    return render_template('testapp/QuizRoom_sub.html', quiz_data=quiz_data, user=user)
 
 @app.route('/makequiz', methods=['GET', 'POST'])
 @login_required
@@ -87,6 +103,17 @@ def makequiz():
     user_data = User_info.query.get(user_id)
     if (user_data.zokusei == 1):
         if request.method == "POST":
+            file = request.files['link']
+
+            if file and allwed_file(file.filename):
+                # 危険な文字を削除（サニタイズ処理）
+                filename = secure_filename(file.filename)
+                # ファイルの保存
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                # アップロード後のページに転送
+                # return redirect(url_for('uploaded_file', filename=filename))
+            
+
             questionid = request.form.get('questionid')
             sentence = request.form.get('sentence')
             choice1 = request.form.get('Choice1')
@@ -94,17 +121,10 @@ def makequiz():
             choice3 = request.form.get('Choice3')
             choice4 = request.form.get('Choice4')
             answer = request.form.get('answer')
-            file_name = request.form.get('link')
-            # if not allowed_images(image.filename):
-            #     return redirect(request.url)
-            # else:
-            ext = os.path.splitext(file_name)[1]  # get the file extension
-            new_filename = get_random_string(20)  # create a random string
+            file_name = filename
 
-            image.save(os.path.join(app.config['IMAGE_UPLOADS'], new_filename+ext))  # save with the new path
-
-            quiz = quiz_info(questionid = questionid, sentence=sentence, Choice1=choice1, Choice2=choice2, Choice3=choice3, Choice4=choice4, link=os.path.join(app.config['IMAGE_UPLOADS'], new_filename+ext))
-            
+            quiz = quiz_info(questionid = questionid, sentence=sentence, Choice1=choice1, Choice2=choice2, Choice3=choice3, Choice4=choice4, link=file_name, answer=answer)
+        
             # if(user_data.questionid == questionid):#問題IDが被ったら上書きする
             #     db.session.merge(quiz)
             #     db.session.commit()
@@ -118,6 +138,13 @@ def makequiz():
            return render_template('testapp/makequiz.html')
     else:
         return redirect('/')
+
+
+@app.route('/uploads/<filename>')
+# ファイルを表示する
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/student_login', methods=['GET', 'POST'])
 @login_required
@@ -134,3 +161,11 @@ def teacher_login():
     user_data = User_info.query.get(user_id)
 
     return render_template('testapp/teacher_login.html', user=user_data)
+
+@app.errorhandler(401)
+def unauthorized(error):
+    return redirect(url_for('login'))
+
+@app.errorhandler(404)
+def unauthorized(error):
+    return redirect(url_for('index'))
